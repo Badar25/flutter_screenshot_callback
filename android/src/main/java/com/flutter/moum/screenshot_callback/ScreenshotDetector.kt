@@ -33,15 +33,19 @@ class ScreenshotDetector(private val context: Context,
     }
 
     private fun queryScreenshots(uri: Uri): List<String> {
-        return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                queryRelativeDataColumn(uri)
-            } else {
-                queryDataColumn(uri)
-            }
-        }  catch (e:Exception){
-            listOf()
-        }
+        /// as we are not doing anything with the path, 
+        /// so just copy uri path and return so it can trigger a callback
+        /// instead of getting into queryDataColumn as its returning 0 length on anycase.
+        return listOf(uri.path.toString())
+        // return try {
+        //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        //         queryRelativeDataColumn(uri)
+        //     } else {
+        //         queryDataColumn(uri)
+        //     }
+        // }  catch (e:Exception){
+        //     listOf()
+        // }
     }
 
     private fun queryDataColumn(uri: Uri): List<String> {
